@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Adithya - Student Portfolio & Aspiring AI Engineer. Interactive 3D Three.js portfolio with real-time avatar guide." />
+  <meta name="theme-color" content="#0a0b10" />
+  <title>Adithya | AI & Web Developer Portfolio (3D Three.js)</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="cyber-dark">
+
+  <!-- Three.js 3D Canvas Background -->
+  <div id="canvas-container">
+    <canvas id="webgl-canvas"></canvas>
+  </div>
+
+  <!-- Ambient Glow Gradients -->
+  <div class="ambient-glow glow-top-left"></div>
+  <div class="ambient-glow glow-bottom-right"></div>
+  <div class="ambient-glow glow-center"></div>
+
+  <!-- Interactive 3D Student Guide HUD Speech Bubble -->
+  <aside id="guide-hud" class="guide-hud-container" aria-label="3D Student Guide HUD">
+    <div class="hud-card glass-panel">
+      <div class="hud-header">
+        <div class="hud-avatar-status">
+          <div class="status-indicator online"></div>
+          <div class="hud-meta">
+            <span class="hud-name">Adithya-3D</span>
+            <span class="hud-role">Student Guide AI</span>
+          </div>
+        </div>
+        <div class="hud-actions">
+          <button id="sound-toggle-btn" class="hud-icon-btn" title="Toggle Sound FX" aria-label="Toggle Sound">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          <button id="hud-minimize-btn" class="hud-icon-btn" title="Toggle HUD Guide" aria-label="Minimize HUD">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="hud-body">
+        <div class="hud-section-badge">
+          <i class="fa-solid fa-compass"></i>
+          <span id="hud-section-name">WELCOME</span>
+        </div>
+        <p id="hud-speech-text" class="hud-text">
+          Hi there! I'm Adithya's 3D avatar guide. Scroll down and I'll walk you through his journey, projects, and skills!
+        </p>
+      </div>
+
+      <div class="hud-footer">
+        <div class="hud-chips">
+          <button class="hud-chip" data-target="about">👋 About</button>
+          <button class="hud-chip" data-target="skills">⚡ Skills</button>
+          <button class="hud-chip" data-target="projects">💻 Projects</button>
+          <button class="hud-chip" data-target="terminal">🤖 Terminal</button>
+          <button class="hud-chip" data-target="contact">📬 Contact</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <nav class="nav-container glass-panel">
+      <a href="#hero" class="nav-brand">
+        <span class="brand-bracket">&lt;</span>
+        <span class="brand-name">ADITHYA</span>
+        <span class="brand-bracket">/&gt;</span>
+      </a>
+
+      <div class="nav-links" id="nav-links">
+        <a href="#hero" class="nav-link active"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#about" class="nav-link"><i class="fa-solid fa-user-astronaut"></i> About</a>
+        <a href="#skills" class="nav-link"><i class="fa-solid fa-bolt"></i> Skills</a>
+        <a href="#projects" class="nav-link"><i class="fa-solid fa-code"></i> Projects</a>
+        <a href="#terminal" class="nav-link"><i class="fa-solid fa-terminal"></i> Terminal</a>
+        <a href="#education" class="nav-link"><i class="fa-solid fa-graduation-cap"></i> Journey</a>
+        <a href="#contact" class="nav-link"><i class="fa-solid fa-paper-plane"></i> Contact</a>
+      </div>
+
+      <div class="nav-right">
+        <a href="#contact" class="btn btn-primary btn-sm nav-cta">
+          <span>Let's Talk</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <button id="mobile-menu-btn" class="mobile-toggle" aria-label="Toggle mobile menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Scrollable Content Over Canvas -->
+  <main class="content-wrapper">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="section hero-section" data-section-id="hero" data-speech="Welcome to my 3D portfolio! I am Adithya, an enthusiastic student diving deep into Computer Science, Web Development, and Artificial Intelligence. Scroll down to explore!">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="badge-tag">
+            <span class="pulse-dot"></span>
+            <span>STUDENT DEVELOPER & AI ENTHUSIAST</span>
+          </div>
+          
+          <h1 class="hero-title">
+            Hi, I'm <span class="gradient-text">Adithya</span>.<br />
+            Crafting Code &amp; <span class="gradient-text-alt">Intelligent Ideas</span>.
+          </h1>
+
+          <p class="hero-desc">
+            A passionate student on a mission to master modern software engineering, 3D interactive web experiences, and artificial intelligence. Ready to turn creative concepts into high-impact code.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">
+              <i class="fa-solid fa-rocket"></i>
+              <span>Explore My Work</span>
+            </a>
+            <a href="#about" class="btn btn-secondary">
+              <i class="fa-solid fa-user"></i>
+              <span>About My Journey</span>
+            </a>
+            <a href="#contact" class="btn btn-glass">
+              <i class="fa-solid fa-envelope"></i>
+              <span>Contact Me</span>
+            </a>
+          </div>
+
+          <div class="hero-stats glass-card">
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Passion for Coding</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-number">5+</div>
+              <div class="stat-label">Projects Built</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-number">3D</div>
+              <div class="stat-label">Three.js WebGL</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-3d-hint">
+          <div class="hint-pill glass-panel">
+            <i class="fa-solid fa-arrows-up-down"></i>
+            <span>Scroll down to interact with my 3D Avatar!</span>
+          </div>
+        </div>
+      </div>
+
+      <a href="#about" class="scroll-indicator" aria-label="Scroll to About section">
+        <div class="mouse-icon">
+          <div class="wheel"></div>
+        </div>
+        <span class="scroll-label">Scroll to Explore</span>
+      </a>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section about-section" data-section-id="about" data-speech="Here's a bit about me! I started with simple HTML tags and fell in love with turning logical problem solving into visual, interactive real-time experiences.">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="sub-badge"><i class="fa-solid fa-user-astronaut"></i> MY STORY</div>
+          <h2 class="section-title">About <span class="gradient-text">Adithya</span></h2>
+          <p class="section-subtitle">A curious mind constantly learning, building, and exploring new technologies.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card glass-card">
+            <div class="card-icon-header">
+              <div class="icon-circle cyan-glow">
+                <i class="fa-solid fa-lightbulb"></i>
+              </div>
+              <span class="card-tag">Core Philosophy</span>
+            </div>
+            <h3>Lifelong Learner & Problem Solver</h3>
+            <p>
+              I believe the best way to master technology is by building practical projects. From writing my first lines of HTML and Python to experimenting with WebGL 3D graphics and AI workflows, every day is an opportunity to level up.
+            </p>
+            <div class="about-highlights">
+              <div class="highlight-item">
+                <i class="fa-solid fa-circle-check text-cyan"></i>
+                <span>Driven by curiosity and clean design</span>
+              </div>
+              <div class="highlight-item">
+                <i class="fa-solid fa-circle-check text-cyan"></i>
+                <span>Fast learner eager to adopt new tech stacks</span>
+              </div>
+              <div class="highlight-item">
+                <i class="fa-solid fa-circle-check text-cyan"></i>
+                <span>Passionate about AI-assisted engineering</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-card glass-card">
+            <div class="card-icon-header">
+              <div class="icon-circle purple-glow">
+                <i class="fa-solid fa-dna"></i>
+              </div>
+              <span class="card-tag">Quick Profile</span>
+            </div>
+            <h3>Student Profile & Focus</h3>
+            <div class="profile-meta-grid">
+              <div class="meta-row">
+                <span class="meta-label"><i class="fa-solid fa-id-badge"></i> Name:</span>
+                <span class="meta-val">Adithya</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label"><i class="fa-solid fa-graduation-cap"></i> Status:</span>
+                <span class="meta-val highlight-badge">Computer Science Student</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label"><i class="fa-solid fa-brain"></i> Interests:</span>
+                <span class="meta-val">Web3D, AI, Full-Stack Dev</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label"><i class="fa-solid fa-laptop-code"></i> Learning:</span>
+                <span class="meta-val">Three.js, React, Python AI</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label"><i class="fa-solid fa-globe"></i> Location:</span>
+                <span class="meta-val">India (Open Worldwide)</span>
+              </div>
+            </div>
+
+            <div class="card-footer-action">
+              <a href="#contact" class="btn btn-outline btn-full">
+                <i class="fa-solid fa-paper-plane"></i> Get In Touch
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Pillars Row -->
+        <div class="pillars-grid">
+          <div class="pillar-card glass-panel">
+            <div class="pillar-icon"><i class="fa-solid fa-cube"></i></div>
+            <h4>3D & Interactive Web</h4>
+            <p>Creating immersive web animations with Three.js, WebGL, and fluid CSS transitions.</p>
+          </div>
+          <div class="pillar-card glass-panel">
+            <div class="pillar-icon"><i class="fa-solid fa-robot"></i></div>
+            <h4>AI & Intelligent Apps</h4>
+            <p>Exploring neural nets, LLM prompts, chatbots, and smart algorithmic automation.</p>
+          </div>
+          <div class="pillar-card glass-panel">
+            <div class="pillar-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h4>Clean Code Foundations</h4>
+            <p>Writing organized, modern, accessible, and high-performance frontend & backend code.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="section skills-section" data-section-id="skills" data-speech="Check out my technical toolbox! I work with HTML5, modern CSS, JavaScript, Three.js 3D graphics, Python, Git, and AI tools.">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="sub-badge"><i class="fa-solid fa-bolt"></i> CAPABILITIES</div>
+          <h2 class="section-title">Skills &amp; <span class="gradient-text">Technologies</span></h2>
+          <p class="section-subtitle">The tools, languages, and frameworks I use to bring digital products to life.</p>
+        </div>
+
+        <div class="skills-categories-grid">
+          <!-- Category 1: Frontend & 3D -->
+          <div class="skill-category-card glass-card">
+            <div class="category-header">
+              <div class="cat-icon cat-cyan"><i class="fa-brands fa-html5"></i></div>
+              <div>
+                <h3>Frontend &amp; 3D Graphics</h3>
+                <span class="cat-desc">Visual interfaces & WebGL</span>
+              </div>
+            </div>
+            <div class="skill-bars">
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-brands fa-html5 text-orange"></i> HTML5 & Semantic Web</span>
+                  <span class="skill-percent">95%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 95%;"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-brands fa-css3-alt text-blue"></i> CSS3, Flexbox &amp; Glassmorphism</span>
+                  <span class="skill-percent">90%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-brands fa-js text-yellow"></i> JavaScript (ES6+ &amp; DOM)</span>
+                  <span class="skill-percent">85%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-solid fa-cubes text-cyan"></i> Three.js &amp; 3D Animation</span>
+                  <span class="skill-percent">80%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 2: Programming & AI -->
+          <div class="skill-category-card glass-card">
+            <div class="category-header">
+              <div class="cat-icon cat-purple"><i class="fa-brands fa-python"></i></div>
+              <div>
+                <h3>Programming &amp; AI</h3>
+                <span class="cat-desc">Logic, algorithms & intelligence</span>
+              </div>
+            </div>
+            <div class="skill-bars">
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-brands fa-python text-yellow"></i> Python Programming</span>
+                  <span class="skill-percent">85%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-solid fa-brain text-purple"></i> AI Models &amp; Prompt Engineering</span>
+                  <span class="skill-percent">80%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-solid fa-network-wired text-green"></i> REST APIs &amp; Data Handling</span>
+                  <span class="skill-percent">75%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 75%;"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-solid fa-code-branch text-pink"></i> Algorithms &amp; Data Structures</span>
+                  <span class="skill-percent">78%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 78%;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 3: Tools & Workflow -->
+          <div class="skill-category-card glass-card">
+            <div class="category-header">
+              <div class="cat-icon cat-green"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+              <div>
+                <h3>Dev Tools &amp; Workflow</h3>
+                <span class="cat-desc">Ecosystem & productivity</span>
+              </div>
+            </div>
+            <div class="skill-bars">
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-brands fa-git-alt text-orange"></i> Git Version Control &amp; GitHub</span>
+                  <span class="skill-percent">88%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 88%;"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-solid fa-terminal text-cyan"></i> PowerShell &amp; Bash Terminal</span>
+                  <span class="skill-percent">82%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 82%;"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-solid fa-layer-group text-blue"></i> Responsive UI / Mobile Design</span>
+                  <span class="skill-percent">90%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-info">
+                  <span><i class="fa-solid fa-wand-magic-sparkles text-purple"></i> Web Audio API &amp; Micro-FX</span>
+                  <span class="skill-percent">80%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tech Badges Cloud -->
+        <div class="tech-badges-cloud glass-panel">
+          <span class="badge-item"><i class="fa-brands fa-html5"></i> HTML5</span>
+          <span class="badge-item"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+          <span class="badge-item"><i class="fa-brands fa-js"></i> JavaScript</span>
+          <span class="badge-item"><i class="fa-solid fa-cubes"></i> Three.js</span>
+          <span class="badge-item"><i class="fa-brands fa-python"></i> Python</span>
+          <span class="badge-item"><i class="fa-solid fa-brain"></i> AI / ML</span>
+          <span class="badge-item"><i class="fa-brands fa-git-alt"></i> Git</span>
+          <span class="badge-item"><i class="fa-brands fa-github"></i> GitHub</span>
+          <span class="badge-item"><i class="fa-solid fa-terminal"></i> CLI</span>
+          <span class="badge-item"><i class="fa-solid fa-laptop-code"></i> VS Code</span>
+          <span class="badge-item"><i class="fa-solid fa-mobile-screen"></i> Responsive</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="section projects-section" data-section-id="projects" data-speech="Take a look at these exciting projects! Each one was built to solve a challenge and sharpen my development skills. Click on the demo or source buttons to explore!">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="sub-badge"><i class="fa-solid fa-code"></i> PORTFOLIO WORK</div>
+          <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+          <p class="section-subtitle">Real projects built with passion, modern technology, and interactive features.</p>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 1 -->
+          <article class="project-card glass-card">
+            <div class="project-banner project-banner-1">
+              <div class="project-banner-overlay">
+                <span class="project-type"><i class="fa-solid fa-cube"></i> 3D WebGL Web</span>
+              </div>
+              <div class="project-icon-float">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+            </div>
+            <div class="project-content">
+              <div class="project-tech-tags">
+                <span class="tag">Three.js</span>
+                <span class="tag">HTML5/CSS3</span>
+                <span class="tag">JavaScript ES6</span>
+              </div>
+              <h3 class="project-title">3D AI Student Portfolio Website</h3>
+              <p class="project-desc">
+                An interactive WebGL-powered 3D student portfolio website featuring a stylized student avatar guide that tracks user scrolling, gestures dynamically, and provides an audio HUD interface.
+              </p>
+              <div class="project-links">
+                <a href="#hero" class="btn btn-sm btn-primary">
+                  <i class="fa-solid fa-eye"></i> Live Experience
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass">
+                  <i class="fa-brands fa-github"></i> Code
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card glass-card">
+            <div class="project-banner project-banner-2">
+              <div class="project-banner-overlay">
+                <span class="project-type"><i class="fa-solid fa-brain"></i> AI & NLP</span>
+              </div>
+              <div class="project-icon-float">
+                <i class="fa-solid fa-comments"></i>
+              </div>
+            </div>
+            <div class="project-content">
+              <div class="project-tech-tags">
+                <span class="tag">Python</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">AI Prompting</span>
+              </div>
+              <h3 class="project-title">Smart AI Study Assistant</h3>
+              <p class="project-desc">
+                An intelligent conversational study buddy designed for students to summarize notes, generate practice quizzes, explain complex coding concepts, and track daily study objectives.
+              </p>
+              <div class="project-links">
+                <button class="btn btn-sm btn-primary" onclick="window.location.hash='terminal'">
+                  <i class="fa-solid fa-terminal"></i> Try in Terminal
+                </button>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass">
+                  <i class="fa-brands fa-github"></i> Code
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-card glass-card">
+            <div class="project-banner project-banner-3">
+              <div class="project-banner-overlay">
+                <span class="project-type"><i class="fa-solid fa-chart-line"></i> Interactive Canvas</span>
+              </div>
+              <div class="project-icon-float">
+                <i class="fa-solid fa-diagram-project"></i>
+              </div>
+            </div>
+            <div class="project-content">
+              <div class="project-tech-tags">
+                <span class="tag">JavaScript</span>
+                <span class="tag">HTML Canvas</span>
+                <span class="tag">Algorithms</span>
+              </div>
+              <h3 class="project-title">Interactive Algorithm Visualizer</h3>
+              <p class="project-desc">
+                A real-time educational tool visualizing sorting algorithms (Bubble, Quick, Merge sort) and graph traversals with dynamic step-by-step animations and audio frequencies.
+              </p>
+              <div class="project-links">
+                <a href="#terminal" class="btn btn-sm btn-primary">
+                  <i class="fa-solid fa-play"></i> Launch Demo
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass">
+                  <i class="fa-brands fa-github"></i> Code
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project-card glass-card">
+            <div class="project-banner project-banner-4">
+              <div class="project-banner-overlay">
+                <span class="project-type"><i class="fa-solid fa-list-check"></i> Web App</span>
+              </div>
+              <div class="project-icon-float">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+            </div>
+            <div class="project-content">
+              <div class="project-tech-tags">
+                <span class="tag">HTML/CSS</span>
+                <span class="tag">LocalStorage</span>
+                <span class="tag">Glass UI</span>
+              </div>
+              <h3 class="project-title">Focus &amp; Task Master Planner</h3>
+              <p class="project-desc">
+                A sleek, distraction-free student task manager with integrated Pomodoro timer, milestone checklists, streak trackers, and persistent browser storage.
+              </p>
+              <div class="project-links">
+                <a href="#contact" class="btn btn-sm btn-primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Preview
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass">
+                  <i class="fa-brands fa-github"></i> Code
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE AI TERMINAL SECTION -->
+    <section id="terminal" class="section terminal-section" data-section-id="terminal" data-speech="You've discovered the interactive AI terminal! Try typing commands like 'help', 'about', 'skills', 'projects', or 'matrix' to interact with my system!">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="sub-badge"><i class="fa-solid fa-terminal"></i> INTERACTIVE PLAYGROUND</div>
+          <h2 class="section-title">Adithya's <span class="gradient-text">AI Terminal</span></h2>
+          <p class="section-subtitle">Type commands below or click the quick command chips to query my digital brain.</p>
+        </div>
+
+        <div class="terminal-wrapper glass-card">
+          <!-- Terminal Window Top Bar -->
+          <div class="terminal-bar">
+            <div class="terminal-dots">
+              <span class="dot red-dot"></span>
+              <span class="dot yellow-dot"></span>
+              <span class="dot green-dot"></span>
+            </div>
+            <div class="terminal-title">
+              <i class="fa-solid fa-microchip text-cyan"></i> adithya-ai-shell v2.6.0 — bash
+            </div>
+            <div class="terminal-controls">
+              <button id="term-clear-btn" class="term-btn" title="Clear screen">Clear</button>
+            </div>
+          </div>
+
+          <!-- Quick Command Chips -->
+          <div class="terminal-command-chips">
+            <span class="chip-label">Quick Commands:</span>
+            <button class="term-cmd-btn" data-cmd="help">help</button>
+            <button class="term-cmd-btn" data-cmd="about">about</button>
+            <button class="term-cmd-btn" data-cmd="skills">skills</button>
+            <button class="term-cmd-btn" data-cmd="projects">projects</button>
+            <button class="term-cmd-btn" data-cmd="quote">quote</button>
+            <button class="term-cmd-btn" data-cmd="matrix">matrix</button>
+            <button class="term-cmd-btn" data-cmd="contact">contact</button>
+          </div>
+
+          <!-- Terminal Output Screen -->
+          <div id="terminal-body" class="terminal-body" tabindex="0">
+            <div class="term-line banner-line">
+              <span class="term-cyan">
+                ==========================================================<br />
+                &nbsp;&nbsp;🚀 WELCOME TO ADITHYA'S INTERACTIVE 3D AI TERMINAL<br />
+                &nbsp;&nbsp;Type 'help' to see all available commands.<br />
+                ==========================================================
+              </span>
+            </div>
+            <div id="terminal-output"></div>
+            
+            <!-- Terminal Input Prompt -->
+            <div class="terminal-input-row">
+              <span class="term-prompt">visitor@adithya:~$</span>
+              <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="Type a command (e.g. 'help')..." aria-label="Terminal input" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION & LEARNING JOURNEY SECTION -->
+    <section id="education" class="section education-section" data-section-id="education" data-speech="Here is my learning trajectory and milestones. I constantly explore cutting-edge topics in web technologies and computer science.">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="sub-badge"><i class="fa-solid fa-graduation-cap"></i> LEARNING PATH</div>
+          <h2 class="section-title">Education &amp; <span class="gradient-text">Milestones</span></h2>
+          <p class="section-subtitle">My academic foundations and self-directed programming journey.</p>
+        </div>
+
+        <div class="timeline-container">
+          <div class="timeline-line"></div>
+
+          <!-- Milestone 1 -->
+          <div class="timeline-item timeline-left">
+            <div class="timeline-dot cyan-dot"><i class="fa-solid fa-code"></i></div>
+            <div class="timeline-content glass-card">
+              <span class="timeline-date">Phase 1 &bull; Genesis</span>
+              <h3>First Steps in Coding</h3>
+              <p>Discovered HTML, CSS and created first web pages. Learned fundamentals of logical thinking, styling, and web architecture.</p>
+              <div class="timeline-tags">
+                <span class="tag">HTML5</span>
+                <span class="tag">CSS3</span>
+                <span class="tag">Web Basics</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Milestone 2 -->
+          <div class="timeline-item timeline-right">
+            <div class="timeline-dot purple-dot"><i class="fa-solid fa-laptop-code"></i></div>
+            <div class="timeline-content glass-card">
+              <span class="timeline-date">Phase 2 &bull; Expansion</span>
+              <h3>JavaScript &amp; Programming Logic</h3>
+              <p>Deepened understanding of programming with JavaScript, Python, algorithms, DOM manipulation, asynchronous fetching, and responsive layouts.</p>
+              <div class="timeline-tags">
+                <span class="tag">JavaScript ES6</span>
+                <span class="tag">Python</span>
+                <span class="tag">Git & GitHub</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Milestone 3 -->
+          <div class="timeline-item timeline-left">
+            <div class="timeline-dot green-dot"><i class="fa-solid fa-cubes"></i></div>
+            <div class="timeline-content glass-card">
+              <span class="timeline-date">Phase 3 &bull; Present</span>
+              <h3>3D WebGL &amp; AI Integration</h3>
+              <p>Building high-performance interactive 3D portfolios with Three.js, exploring AI prompt engineering, automated workflows, and UI glassmorphism.</p>
+              <div class="timeline-tags">
+                <span class="tag">Three.js</span>
+                <span class="tag">AI Systems</span>
+                <span class="tag">WebGL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Milestone 4 -->
+          <div class="timeline-item timeline-right">
+            <div class="timeline-dot orange-dot"><i class="fa-solid fa-rocket"></i></div>
+            <div class="timeline-content glass-card">
+              <span class="timeline-date">Phase 4 &bull; Future Target</span>
+              <h3>Full-Stack &amp; AI Engineering</h3>
+              <p>Expanding into scalable cloud deployments, specialized machine learning applications, open-source contributions, and high-impact software.</p>
+              <div class="timeline-tags">
+                <span class="tag">Full-Stack</span>
+                <span class="tag">Cloud</span>
+                <span class="tag">Deep Learning</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section contact-section" data-section-id="contact" data-speech="Let's connect! Whether you have an internship opportunity, a project collaboration, or just want to talk about tech and AI, my inbox is always open!">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="sub-badge"><i class="fa-solid fa-paper-plane"></i> GET IN TOUCH</div>
+          <h2 class="section-title">Let's Build Something <span class="gradient-text">Together</span></h2>
+          <p class="section-subtitle">Have a project idea, internship, or question? Send me a message!</p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Left Info Cards -->
+          <div class="contact-info-panel">
+            <div class="glass-card contact-card">
+              <div class="contact-icon cyan-glow"><i class="fa-solid fa-envelope"></i></div>
+              <div class="contact-details">
+                <h4>Email Me Directly</h4>
+                <p>adithya@example.com</p>
+                <button id="copy-email-btn" class="btn btn-sm btn-outline">
+                  <i class="fa-solid fa-copy"></i> <span>Copy Email</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card contact-card">
+              <div class="contact-icon purple-glow"><i class="fa-solid fa-location-dot"></i></div>
+              <div class="contact-details">
+                <h4>Location &amp; Availability</h4>
+                <p>India &bull; Open for Remote Projects &amp; Internships</p>
+                <span class="available-badge"><span class="pulse-dot"></span> Available for Opportunities</span>
+              </div>
+            </div>
+
+            <div class="glass-card contact-card">
+              <div class="contact-icon green-glow"><i class="fa-solid fa-share-nodes"></i></div>
+              <div class="contact-details">
+                <h4>Connect on Socials</h4>
+                <div class="social-links-row">
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+                  <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-link" title="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Contact Form -->
+          <div class="contact-form-panel glass-card">
+            <form id="contact-form" class="contact-form" onsubmit="return false;">
+              <h3 class="form-title">Send a Quick Message</h3>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="form-name"><i class="fa-solid fa-user"></i> Your Name</label>
+                  <input type="text" id="form-name" placeholder="John Doe" required />
+                </div>
+                <div class="form-group">
+                  <label for="form-email"><i class="fa-solid fa-at"></i> Your Email</label>
+                  <input type="email" id="form-email" placeholder="john@example.com" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="form-subject"><i class="fa-solid fa-tag"></i> Subject</label>
+                <input type="text" id="form-subject" placeholder="Collaboration / Project / Question" required />
+              </div>
+
+              <div class="form-group">
+                <label for="form-message"><i class="fa-solid fa-message"></i> Message</label>
+                <textarea id="form-message" rows="4" placeholder="Hi Adithya, I loved your 3D portfolio..." required></textarea>
+              </div>
+
+              <button type="submit" id="submit-btn" class="btn btn-primary btn-full">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Send Message</span>
+              </button>
+
+              <div id="form-feedback" class="form-feedback hidden"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <a href="#hero" class="nav-brand">
+          <span class="brand-bracket">&lt;</span>
+          <span class="brand-name">ADITHYA</span>
+          <span class="brand-bracket">/&gt;</span>
+        </a>
+        <p class="footer-tagline">Crafted with Three.js, WebGL &amp; Modern Web Tech &bull; 2026</p>
+      </div>
+
+      <div class="footer-center">
+        <p>Built with ❤️ by Adithya</p>
+      </div>
+
+      <div class="footer-right">
+        <a href="#hero" class="btn btn-glass btn-sm back-to-top" aria-label="Back to top">
+          <i class="fa-solid fa-arrow-up"></i>
+          <span>Top</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Three.js (r128) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Three Scene & Character Controllers -->
+  <script src="js/three-scene.js"></script>
+  <script src="js/student-guide.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
